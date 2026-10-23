@@ -1,45 +1,41 @@
-// Función para solicitar y validar la temperatura
-function solicitarTemperatura() {
+// Captura, validación de datos y renderizado
+
+function solicitarTemperaturaValida() {
   let entrada;
-  let celsius;
+  let numero;
 
   while (true) {
     entrada = prompt("Ingresa la temperatura en grados Celsius:");
 
-    // Valida si canceló o dejó el texto vacío
     if (entrada === null || entrada.trim() === "") {
-      alert("Error: No ingresaste ningún valor. Por favor ingresa un número.");
+      alert("Error: El campo no puede estar vacío. Debes ingresar un número.");
       continue;
     }
 
-    celsius = Number(entrada);
+    numero = Number(entrada);
 
-    // Valida que sea realmente un número
-    if (isNaN(celsius)) {
+    if (isNaN(numero)) {
       alert("Error: '" + entrada + "' no es un número válido. Intenta nuevamente.");
     } else {
       break;
     }
   }
 
-  return celsius;
+  return numero;
 }
 
-// Función principal
-function convertirTemperatura() {
-  const celsius = solicitarTemperatura();
+function iniciarConversor() {
+  const celsius = solicitarTemperaturaValida();
 
-  // Fórmulas
-  const fahrenheit = (celsius * 1.8) + 32;
-  const kelvin = celsius + 273.15;
+  // Llamada a las funciones modulares de conversor.js
+  const fahrenheit = convertirAFahrenheit(celsius);
+  const kelvin = convertirAKelvin(celsius);
 
-  // 1. Mostrar por consola
   console.log("=== Resultados de Conversión ===");
-  console.log("Temperatura ingresada (Celsius): " + celsius);
+  console.log("Temperatura ingresada: " + celsius + " °C");
   console.log("Grados Kelvin: " + kelvin);
   console.log("Grados Fahrenheit: " + fahrenheit);
 
-  // 2. Mostrar en el DOM
   const contenedor = document.getElementById("resultado");
   if (contenedor) {
     contenedor.innerHTML = `
@@ -51,5 +47,4 @@ function convertirTemperatura() {
   }
 }
 
-// Ejecutar
-convertirTemperatura();
+iniciarConversor();
